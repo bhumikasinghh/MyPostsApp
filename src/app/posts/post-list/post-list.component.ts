@@ -9,7 +9,7 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements OnInit,OnDestroy {
+export class PostListComponent implements OnInit {
 
   // posts=[
   //   {title:'First Post',content:'This is my first post\'s content'},
@@ -19,12 +19,13 @@ export class PostListComponent implements OnInit,OnDestroy {
  posts:Post[]=[];
  private postsSub:Subscription;
   constructor(public postsService:PostsService) { }
-  ngOnDestroy() {
-    this.postsSub.unsubscribe();
-  }
+
+  // ngOnDestroy() {
+  //   this.postsSub.unsubscribe();
+  // }
 
   ngOnInit() {
-    this.posts=this.postsService.getPosts();
+   this.postsService.getPosts();
     this.postsService.getPostUpdateListener()
     .subscribe((posts:Post[])=>
     {
