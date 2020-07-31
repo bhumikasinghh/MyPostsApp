@@ -1,3 +1,4 @@
+
 import { PostsService } from './../posts.service';
 import { Component, OnInit,Input, OnDestroy } from '@angular/core';
 import { Post } from '../post.model';
@@ -11,6 +12,7 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 })
 export class PostListComponent implements OnInit {
 
+  isLoading=false;
   // posts=[
   //   {title:'First Post',content:'This is my first post\'s content'},
   //   {title:'Second Post',content:'This is my second post\'s content'},
@@ -25,13 +27,21 @@ export class PostListComponent implements OnInit {
   // }
 
   ngOnInit() {
+    this.isLoading=true;
    this.postsService.getPosts();
     this.postsService.getPostUpdateListener()
     .subscribe((posts:Post[])=>
     {
+     this.isLoading=false;
      this.posts=posts;
     });
   }
+
+  onDelete(postId:string){
+    this.postsService.deletePost(postId);
+  }
+  
+
 
   
 }
